@@ -1,0 +1,10 @@
+[package]
+name = "startime_impl"
+version = "0.0.0"
+edition = "2024"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = "1.0.106"

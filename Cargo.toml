@@ -1,0 +1,10 @@
+[package]
+name = "startime"
+version = "0.0.0"
+edition = "2024"
+
+[dependencies]
+startime_impl = { path = "startime_impl" }
+
+[workspace]
+members = ["startime_impl", "tests"]
