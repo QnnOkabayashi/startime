@@ -1,7 +1,11 @@
 [package]
 name = "startime_impl"
 version = "0.0.0"
+authors = ["Quinn Okabayashi <quinnokabayashi@gmail.com>"]
+description = "Implementation detail of the `startime` crate"
 edition = "2024"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/QnnOkabayashi/startime"
 
 [lib]
 proc-macro = true
