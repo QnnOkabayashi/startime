@@ -14,7 +14,7 @@ pub fn startime(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     startime_impl(content)
         .unwrap_or_else(|e| match e {
             Error::Starlark(error) => {
-                let message = error.to_string();
+                let message = error.without_diagnostic().to_string();
                 let span = if let Some(file_span) = error.span() {
                     tree.starlark_offset_to_rust_span(file_span.span.begin().get() as usize)
                 } else {
