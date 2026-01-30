@@ -1,6 +1,7 @@
 use proc_macro2::{Span, TokenStream};
 use quote::quote_spanned;
-use starlark::environment::{Globals, Module};
+use starlark::PrintHandler;
+use starlark::environment::{Globals, GlobalsBuilder, LibraryExtension, Module};
 use starlark::eval::Evaluator;
 use starlark::syntax::{AstModule, Dialect};
 use starlark::values::Value;
@@ -59,13 +60,28 @@ fn startime_impl(content: String) -> Result<TokenStream, Error> {
 
     // We create a `Globals`, defining the standard library functions available.
     // The `standard` function uses those defined in the Starlark specification.
-    let globals: Globals = Globals::standard();
+    let globals: Globals = GlobalsBuilder::standard()
+        .with(|b| LibraryExtension::Print.add(b))
+        .build();
 
     // We create a `Module`, which stores the global variables for our calculation.
     let module: Module = Module::new();
 
+    let print_handler = PrefixPrinter {
+        prefix: {
+            let callsite = Span::call_site();
+            format!(
+                "[{}:{}:{}] ",
+                callsite.file(),
+                callsite.start().line,
+                callsite.start().column
+            )
+        },
+    };
+
     // We create an evaluator, which controls how evaluation occurs.
     let mut eval: Evaluator = Evaluator::new(&module);
+    eval.set_print_handler(&print_handler);
 
     // And finally we evaluate the code using the evaluator.
     let res: Value = eval.eval_module(ast, &globals).map_err(Error::Starlark)?;
@@ -74,4 +90,15 @@ fn startime_impl(content: String) -> Result<TokenStream, Error> {
         .ok_or(Error::NoString)?
         .parse()
         .map_err(Error::TokenStream)
+}
+
+struct PrefixPrinter {
+    prefix: String,
+}
+
+impl PrintHandler for PrefixPrinter {
+    fn println(&self, text: &str) -> starlark::Result<()> {
+        eprintln!("{}{text}", self.prefix);
+        Ok(())
+    }
 }
