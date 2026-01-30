@@ -13,18 +13,18 @@ startime::startime! {
     output
 }
 
-// Generates the following:
+// Generates the following
 
 struct Foo;
 struct Bar;
 ```
 
-The executed Starlark code takes no inputs and is expected to produce a single `str` output.
+The executed Starlark code takes no inputs and is expected to produce a single string output.
 However, you can nest it within declarative macros to generate `startime! {}` invocations with user provided arguments.
 
 ```rust
 macro_rules! gen_positions {
-    ($components:tt) => {
+    ($components:expr) => {
         startime::startime! {
             components = $components
             output = ""
@@ -66,3 +66,4 @@ The `startime` proc macro parses the input tokens into an indentation-sensitive 
 ## Known issues
 
 When `startime! {}` is nested in a declarative macro, pasting in repeated elements from the declarative macro input will break `startime`s ability to recover the original source code.
+Additionally, using non-`expr` fragment specifies in macros is very error prone.

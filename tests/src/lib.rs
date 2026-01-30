@@ -1,18 +1,18 @@
-startime::startime! {
-    output = ""
-    for name in ["Foo", "Bar"]:
-        output += """
-        struct {};
-        """.format(name)
+// startime::startime! {
+//     output = ""
+//     for name in ["Foo", "Bar"]:
+//         output += """
+//         struct {};
+//         """.format(name)
 
-    output
-}
+//     output
+// }
 
-fn _foo(_: Foo) {}
-fn _bar(_: Bar) {}
+// fn _foo(_: Foo) {}
+// fn _bar(_: Bar) {}
 
 macro_rules! gen_positions {
-    ($components:tt) => {
+    ($components:expr) => {
         startime::startime! {
             components = $components
             output = ""
