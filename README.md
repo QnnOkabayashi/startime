@@ -51,6 +51,18 @@ enum Position3 { X, Y, Z }
 enum Position4 { X, Y, Z, W }
 ```
 
+## Why Starlark
+
+Starlark has many nice qualities for code generation use cases:
+* Familar: many people are familiar with Python, which Starlark is a dialect of.
+* Simple: the language gets out of your way and lets you write clearly express the logic.
+* Deterministic: code that runs at compile time should be deterministic for reproducibility.
+* Interpreted: the proc macro implementation is straightforward and fast.
+
+## How it works
+
+The `startime` proc macro parses the input tokens into an indentation-sensitive string, uses the [`starlark`](https://docs.rs/starlark/latest/starlark/) crate to interpret the code, and returns the resulting string as Rust tokens.
+
 ## Known issues
 
 When `startime! {}` is nested in a declarative macro, pasting in repeated elements from the declarative macro input will break `startime`s ability to recover the original source code.
