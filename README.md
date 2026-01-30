@@ -55,7 +55,7 @@ enum Position4 { X, Y, Z, W }
 
 Starlark has many nice qualities for code generation use cases:
 * Familar: many people are familiar with Python, which Starlark is a dialect of.
-* Simple: the language gets out of your way and lets you write clearly express the logic.
+* Simple: the language gets out of your way and lets you clearly express the logic.
 * Deterministic: code that runs at compile time should be deterministic for reproducibility.
 * Interpreted: the proc macro implementation is straightforward and fast.
 
