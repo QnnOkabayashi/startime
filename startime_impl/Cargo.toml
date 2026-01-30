@@ -11,4 +11,6 @@ repository = "https://github.com/QnnOkabayashi/startime"
 proc-macro = true
 
 [dependencies]
-proc-macro2 = "1.0.106"
+proc-macro2 = { version = "1.0.106", features = ["span-locations"] }
+quote = "1.0.44"
+starlark = "0.13.0"
